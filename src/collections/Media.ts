@@ -7,6 +7,14 @@ export const Media: CollectionConfig = {
   },
   fields: [
     {
+      type: 'text',
+      name: 'origFilename',
+      label: 'Original Filename',
+      admin: {
+        condition: (data) => Boolean(data.origFilename)
+      }
+    },
+    {
       name: 'alt',
       type: 'text',
       required: true,
