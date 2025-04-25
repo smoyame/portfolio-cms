@@ -1,13 +1,39 @@
 import type { CollectionConfig } from 'payload'
-
+import { isA } from '@/access/isA'
 export const Users: CollectionConfig = {
   slug: 'users',
-  admin: {
-    useAsTitle: 'email',
+  access: {
+    create: isA,
+    delete: isA,
+    update: isA,
   },
-  auth: true,
+  admin: {
+    useAsTitle: 'username',
+  },
+  auth: {
+    loginWithUsername: {
+      allowEmailLogin: false,
+      requireEmail: true,
+    },
+    maxLoginAttempts: 3
+  },
   fields: [
-    // Email added by default
-    // Add more fields as needed
+    {
+      type: 'radio',
+      name: 'role',
+      options: [
+        {
+          label: 'Admin',
+          value: 'admin',
+        },
+        {
+          label: 'Viewer',
+          value: 'viewer',
+        },
+      ],
+      admin: {
+        layout: 'horizontal'
+      }
+    }
   ],
 }
