@@ -33,10 +33,22 @@ export const Job: CollectionConfig = {
 						{
 							type: 'date',
 							name: 'start',
+							admin: {
+								date: {
+									displayFormat: 'MM/yyyy',
+									pickerAppearance: 'monthOnly'
+								}
+							}
 						},
 						{
 							type: 'date',
 							name: 'end',
+							admin: {
+								date: {
+									displayFormat: 'MM/yyyy',
+									pickerAppearance: 'monthOnly'
+								}
+							}
 						}
 					]
 				}
