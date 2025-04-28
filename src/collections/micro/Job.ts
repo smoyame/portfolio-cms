@@ -24,12 +24,23 @@ export const Job: CollectionConfig = {
 			]
 		},
 		{
-			type: 'date',
-			name: 'start',
-		},
-		{
-			type: 'date',
-			name: 'end',
+			type: 'collapsible',
+			label: 'Job Duration',
+			fields: [
+				{
+					type: 'row',
+					fields: [
+						{
+							type: 'date',
+							name: 'start',
+						},
+						{
+							type: 'date',
+							name: 'end',
+						}
+					]
+				}
+			]
 		}
 	]
 }
