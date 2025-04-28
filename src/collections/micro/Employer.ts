@@ -13,6 +13,11 @@ export const Employer: CollectionConfig = {
 			type: 'text',
 			name: 'name',
 			label: 'Employer Name',
-		}
+		},
+		{
+			type: 'text',
+			name: 'site',
+			label: 'Website',
+		},
 	]
 }
