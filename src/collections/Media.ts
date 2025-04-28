@@ -46,6 +46,15 @@ export const Media: CollectionConfig = {
         condition: (data) => Boolean(data.origFilename),
         readOnly: true
       },
+      hooks: {
+        beforeValidate: [
+          async ({ context, value, operation }) => {
+            if (operation === "create") {
+              return value = await context.origFilename
+            }
+          }
+        ]
+      },
     },
     {
       name: 'alt',
