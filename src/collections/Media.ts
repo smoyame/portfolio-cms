@@ -17,7 +17,7 @@ export const Media: CollectionConfig = {
     ],
     afterChange: [
       async ({ collection, context, doc, req, operation }) => {
-        if (operation === 'create' || operation === 'update') {
+        if (operation === 'create') {
           if (!context.updatePerformed) {
             context.updatePerformed = true
             await req.payload.update({
