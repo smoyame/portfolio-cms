@@ -13,6 +13,11 @@ export const Project: CollectionConfig = {
 			type: 'text',
 			name: 'name',
 			label: 'Project Name',
+		},
+		{
+			type: 'text',
+			name: 'site',
+			label: 'Live Website',
 		}
 	]
 }
