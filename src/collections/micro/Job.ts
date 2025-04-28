@@ -14,5 +14,22 @@ export const Job: CollectionConfig = {
 			name: 'name',
 			label: 'Role name',
 		},
+		{
+			type: 'select',
+			name: 'status',
+			options: [
+				{ value: 'ft', label: 'Full-time' },
+				{ value: 'pt', label: 'Part-time' },
+				{ value: 'ct', label: 'Contract' }
+			]
+		},
+		{
+			type: 'date',
+			name: 'start',
+		},
+		{
+			type: 'date',
+			name: 'end',
+		}
 	]
 }
