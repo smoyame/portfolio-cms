@@ -1,4 +1,40 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionConfig, ImageSize } from 'payload'
+
+const desiredSizeOpts = [250, 500, 900, 1200, 2000]
+const desiredFormatOpts = [
+  {
+    format: 'jpeg',
+    options: {
+      quality: 82,
+      progressize: true,
+    }
+  },
+  {
+    format: 'webp',
+    options: {
+      quality: 82,
+      progressize: true,
+    }
+  },
+  {
+    format: 'avif',
+    options: {
+      quality: 82,
+      progressize: true,
+    }
+  },
+]
+
+const thumbnailSizeName = `${desiredSizeOpts[0]}w-${desiredFormatOpts[0].format}`
+const imageSizesList = desiredSizeOpts.flatMap(size => desiredFormatOpts.map(formatOptions => (
+  {
+    name: `${size}w-${formatOptions.format}`,
+    width: size,
+    withoutEnlargement: true,
+    formatOptions: formatOptions,
+    generateImageName: ({ originalName, extension, width }: any) => `${originalName}-${width}.${extension}`
+  }
+))) as ImageSize[]
 
 export const Media: CollectionConfig = {
   slug: 'media',
@@ -63,47 +99,7 @@ export const Media: CollectionConfig = {
     },
   ],
   upload: {
-    adminThumbnail: '250w-jpeg',
-    imageSizes: [
-      {
-        name: '250w-jpeg',
-        width: 250,
-        withoutEnlargement: true,
-        formatOptions: {
-          format: 'jpeg',
-          options: {
-            quality: 82,
-            progressive: true
-          }
-        },
-        generateImageName: ({ originalName, extension, width }) => `${originalName}-${width}.${extension}`
-      },
-      {
-        name: '250w-webp',
-        width: 250,
-        withoutEnlargement: true,
-        formatOptions: {
-          format: 'webp',
-          options: {
-            quality: 82,
-            lossless: true
-          }
-        },
-        generateImageName: ({ originalName, extension, width }) => `${originalName}-${width}.${extension}`
-      },
-      {
-        name: '250w-avif',
-        width: 250,
-        withoutEnlargement: true,
-        formatOptions: {
-          format: 'avif',
-          options: {
-            quality: 82,
-            lossless: true
-          }
-        },
-        generateImageName: ({ originalName, extension, width }) => `${originalName}-${width}.${extension}`
-      }
-    ]
+    adminThumbnail: thumbnailSizeName,
+    imageSizes: imageSizesList
   }
 }
