@@ -65,10 +65,15 @@ export interface Config {
   auth: {
     users: UserAuthOperations;
   };
-  blocks: {};
+  blocks: {
+    imageBlock: ImageBlock;
+    richtextBlock: RichtextBlock;
+    videoBlock: VideoBlock;
+  };
   collections: {
     users: User;
     media: Media;
+    feature: Feature;
     client: Client;
     discipline: Discipline;
     employer: Employer;
@@ -78,10 +83,15 @@ export interface Config {
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsJoins: {};
+  collectionsJoins: {
+    employer: {
+      connection: 'job' | 'client';
+    };
+  };
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    feature: FeatureSelect<false> | FeatureSelect<true>;
     client: ClientSelect<false> | ClientSelect<true>;
     discipline: DisciplineSelect<false> | DisciplineSelect<true>;
     employer: EmployerSelect<false> | EmployerSelect<true>;
@@ -94,8 +104,12 @@ export interface Config {
   db: {
     defaultIDType: string;
   };
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    about: About;
+  };
+  globalsSelect: {
+    about: AboutSelect<false> | AboutSelect<true>;
+  };
   locale: 'en';
   user: User & {
     collection: 'users';
@@ -124,22 +138,15 @@ export interface UserAuthOperations {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
+ * via the `definition` "ImageBlock".
  */
-export interface User {
-  id: string;
-  role?: ('admin' | 'viewer') | null;
-  updatedAt: string;
-  createdAt: string;
-  email: string;
-  username: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  password?: string | null;
+export interface ImageBlock {
+  media?: (string | null) | Media;
+  start?: number | null;
+  end?: number | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'imageBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -149,6 +156,30 @@ export interface Media {
   id: string;
   origFilename?: string | null;
   alt: string;
+  relatedTo?:
+    | (
+        | {
+            relationTo: 'client';
+            value: string | Client;
+          }
+        | {
+            relationTo: 'discipline';
+            value: string | Discipline;
+          }
+        | {
+            relationTo: 'employer';
+            value: string | Employer;
+          }
+        | {
+            relationTo: 'job';
+            value: string | Job;
+          }
+        | {
+            relationTo: 'project';
+            value: string | Project;
+          }
+      )[]
+    | null;
   prefix?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -291,12 +322,53 @@ export interface Media {
 export interface Client {
   id: string;
   name?: string | null;
+  employer?: (string | null) | Employer;
   parentOrg?: string | null;
   /**
    * The shortcode used to refer to this client internally.
    */
   abbr?: string | null;
   site?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "employer".
+ */
+export interface Employer {
+  id: string;
+  name?: string | null;
+  site?: string | null;
+  connection?: {
+    docs?: (
+      | {
+          relationTo?: 'job';
+          value: string | Job;
+        }
+      | {
+          relationTo?: 'client';
+          value: string | Client;
+        }
+    )[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "job".
+ */
+export interface Job {
+  id: string;
+  name?: string | null;
+  employer?: (string | null) | Employer;
+  status?: ('ft' | 'pt' | 'ct') | null;
+  start?: string | null;
+  end?: string | null;
+  discipline?: (string | Discipline)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -312,36 +384,102 @@ export interface Discipline {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "employer".
- */
-export interface Employer {
-  id: string;
-  name?: string | null;
-  site?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "job".
- */
-export interface Job {
-  id: string;
-  name?: string | null;
-  status?: ('ft' | 'pt' | 'ct') | null;
-  start?: string | null;
-  end?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "project".
  */
 export interface Project {
   id: string;
   name?: string | null;
   site?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RichtextBlock".
+ */
+export interface RichtextBlock {
+  copy: string;
+  copyBlok?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'richtextBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "VideoBlock".
+ */
+export interface VideoBlock {
+  media?: (string | null) | Media;
+  controls?: boolean | null;
+  start?: number | null;
+  end?: number | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'videoBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users".
+ */
+export interface User {
+  id: string;
+  role?: ('admin' | 'viewer') | null;
+  updatedAt: string;
+  createdAt: string;
+  email: string;
+  username: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "feature".
+ */
+export interface Feature {
+  id: string;
+  subject?:
+    | ({
+        relationTo: 'client';
+        value: string | Client;
+      } | null)
+    | ({
+        relationTo: 'discipline';
+        value: string | Discipline;
+      } | null)
+    | ({
+        relationTo: 'employer';
+        value: string | Employer;
+      } | null)
+    | ({
+        relationTo: 'job';
+        value: string | Job;
+      } | null)
+    | ({
+        relationTo: 'project';
+        value: string | Project;
+      } | null);
+  name?: string | null;
+  desc?: string | null;
+  content?: (ImageBlock | RichtextBlock | VideoBlock)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -359,6 +497,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: string | Media;
+      } | null)
+    | ({
+        relationTo: 'feature';
+        value: string | Feature;
       } | null)
     | ({
         relationTo: 'client';
@@ -446,6 +588,7 @@ export interface UsersSelect<T extends boolean = true> {
 export interface MediaSelect<T extends boolean = true> {
   origFilename?: T;
   alt?: T;
+  relatedTo?: T;
   prefix?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -615,10 +758,62 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "feature_select".
+ */
+export interface FeatureSelect<T extends boolean = true> {
+  subject?: T;
+  name?: T;
+  desc?: T;
+  content?:
+    | T
+    | {
+        imageBlock?: T | ImageBlockSelect<T>;
+        richtextBlock?: T | RichtextBlockSelect<T>;
+        videoBlock?: T | VideoBlockSelect<T>;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ImageBlock_select".
+ */
+export interface ImageBlockSelect<T extends boolean = true> {
+  media?: T;
+  start?: T;
+  end?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RichtextBlock_select".
+ */
+export interface RichtextBlockSelect<T extends boolean = true> {
+  copy?: T;
+  copyBlok?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "VideoBlock_select".
+ */
+export interface VideoBlockSelect<T extends boolean = true> {
+  media?: T;
+  controls?: T;
+  start?: T;
+  end?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "client_select".
  */
 export interface ClientSelect<T extends boolean = true> {
   name?: T;
+  employer?: T;
   parentOrg?: T;
   abbr?: T;
   site?: T;
@@ -641,6 +836,7 @@ export interface DisciplineSelect<T extends boolean = true> {
 export interface EmployerSelect<T extends boolean = true> {
   name?: T;
   site?: T;
+  connection?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -650,9 +846,11 @@ export interface EmployerSelect<T extends boolean = true> {
  */
 export interface JobSelect<T extends boolean = true> {
   name?: T;
+  employer?: T;
   status?: T;
   start?: T;
   end?: T;
+  discipline?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -697,6 +895,64 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about".
+ */
+export interface About {
+  id: string;
+  name?: {
+    first?: string | null;
+    last?: string | null;
+  };
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  contact?:
+    | {
+        label?: string | null;
+        link?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about_select".
+ */
+export interface AboutSelect<T extends boolean = true> {
+  name?:
+    | T
+    | {
+        first?: T;
+        last?: T;
+      };
+  description?: T;
+  contact?:
+    | T
+    | {
+        label?: T;
+        link?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
