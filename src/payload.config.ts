@@ -10,6 +10,7 @@ import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Feature } from './collections/Feature'
 import { About } from './collections/About'
+import { Sitewide } from './globals/Sitewide'
 
 import { Client } from '@/collections/micro/Client'
 import { Discipline } from '@/collections/micro/Discipline'
