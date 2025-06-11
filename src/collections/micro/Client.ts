@@ -15,6 +15,11 @@ export const Client: CollectionConfig = {
 			label: 'Client Name',
 		},
 		{
+			type: 'relationship',
+			name: 'employer',
+			relationTo: 'employer'
+		},
+		{
 			type: 'text',
 			name: 'parentOrg',
 			label: 'Parent Organization'

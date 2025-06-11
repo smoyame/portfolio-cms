@@ -10,9 +10,19 @@ export const Job: CollectionConfig = {
 	},
 	fields: [
 		{
-			type: 'text',
-			name: 'name',
-			label: 'Role name',
+			type: 'row',
+			fields: [
+				{
+					type: 'text',
+					name: 'name',
+					label: 'Role name',
+				},
+				{
+					type: 'relationship',
+					name: 'employer',
+					relationTo: 'employer'
+				},
+			]
 		},
 		{
 			type: 'select',
@@ -53,6 +63,13 @@ export const Job: CollectionConfig = {
 					]
 				}
 			]
-		}
+		},
+		{
+			type: 'relationship',
+			name: 'discipline',
+			label: 'Disciplines',
+			relationTo: 'discipline',
+			hasMany: true
+		},
 	]
 }

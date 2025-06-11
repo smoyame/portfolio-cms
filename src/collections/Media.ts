@@ -97,6 +97,12 @@ export const Media: CollectionConfig = {
       type: 'text',
       required: true,
     },
+    {
+      type: 'relationship',
+      name: 'relatedTo',
+      relationTo: ['client', 'discipline', 'employer', 'job', 'project'],
+      hasMany: true
+    }
   ],
   upload: {
     adminThumbnail: thumbnailSizeName,

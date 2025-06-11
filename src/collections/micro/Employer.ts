@@ -19,5 +19,12 @@ export const Employer: CollectionConfig = {
 			name: 'site',
 			label: 'Website',
 		},
+		{
+			type: 'join',
+			name: 'connection',
+			label: 'Connection',
+			collection: ['job', 'client'],
+			on: 'employer'
+		}
 	]
 }
