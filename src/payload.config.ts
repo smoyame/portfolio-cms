@@ -15,6 +15,10 @@ import { Employer } from '@/collections/micro/Employer'
 import { Job } from '@/collections/micro/Job'
 import { Project } from '@/collections/micro/Project'
 
+import { ImageBlock } from './collections/blocks/ImageBlock'
+import { RichtextBlock } from './collections/blocks/RichtextBlock'
+import { VideoBlock } from './collections/blocks/VideoBlock'
+
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -25,6 +29,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
+  blocks: [ImageBlock, RichtextBlock, VideoBlock],
   collections: [Users, Media, Client, Discipline, Employer, Job, Project],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET as string,
