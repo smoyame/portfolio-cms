@@ -1,6 +1,7 @@
 import { s3Storage } from '@payloadcms/storage-s3'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { seoPlugin } from '@payloadcms/plugin-seo'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -71,5 +72,13 @@ export default buildConfig({
         region: process.env.S3_RG,
       },
     }),
+    seoPlugin({
+      collections: ['feature'],
+      globals: ['about', 'sitewide'],
+      tabbedUI: true,
+      uploadsCollection: 'media',
+      generateTitle: ({ doc }) => `Website.com — ${doc.title}`,
+      generateDescription: ({ doc }) => doc.plaintext
+    })
   ],
 })

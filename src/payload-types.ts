@@ -106,9 +106,11 @@ export interface Config {
   };
   globals: {
     about: About;
+    sitewide: Sitewide;
   };
   globalsSelect: {
     about: AboutSelect<false> | AboutSelect<true>;
+    sitewide: SitewideSelect<false> | SitewideSelect<true>;
   };
   locale: 'en';
   user: User & {
@@ -480,6 +482,14 @@ export interface Feature {
   name?: string | null;
   desc?: string | null;
   content?: (ImageBlock | RichtextBlock | VideoBlock)[] | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -771,6 +781,13 @@ export interface FeatureSelect<T extends boolean = true> {
         richtextBlock?: T | RichtextBlockSelect<T>;
         videoBlock?: T | VideoBlockSelect<T>;
       };
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
@@ -928,6 +945,41 @@ export interface About {
         id?: string | null;
       }[]
     | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sitewide".
+ */
+export interface Sitewide {
+  id: string;
+  Header?: {
+    logo?: (string | null) | Media;
+    nav?:
+      | {
+          copy?: string | null;
+          link?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -949,6 +1001,41 @@ export interface AboutSelect<T extends boolean = true> {
         label?: T;
         link?: T;
         id?: T;
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sitewide_select".
+ */
+export interface SitewideSelect<T extends boolean = true> {
+  Header?:
+    | T
+    | {
+        logo?: T;
+        nav?:
+          | T
+          | {
+              copy?: T;
+              link?: T;
+              id?: T;
+            };
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
       };
   updatedAt?: T;
   createdAt?: T;
