@@ -10,6 +10,7 @@ import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Feature } from './collections/Feature'
 import { About } from './collections/About'
+import { Sitewide } from './globals/Sitewide'
 
 import { Client } from '@/collections/micro/Client'
 import { Discipline } from '@/collections/micro/Discipline'
@@ -34,7 +35,7 @@ export default buildConfig({
   blocks: [ImageBlock, RichtextBlock, VideoBlock],
   collections: [Users, Media, Feature, Client, Discipline, Employer, Job, Project],
   editor: lexicalEditor(),
-  globals: [About],
+  globals: [About, Sitewide],
   secret: process.env.PAYLOAD_SECRET as string,
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
