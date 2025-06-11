@@ -8,6 +8,7 @@ import sharp from 'sharp'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
+import { Feature } from './collections/Feature'
 
 import { Client } from '@/collections/micro/Client'
 import { Discipline } from '@/collections/micro/Discipline'
@@ -30,7 +31,7 @@ export default buildConfig({
     },
   },
   blocks: [ImageBlock, RichtextBlock, VideoBlock],
-  collections: [Users, Media, Client, Discipline, Employer, Job, Project],
+  collections: [Users, Media, Feature, Client, Discipline, Employer, Job, Project],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET as string,
   typescript: {
