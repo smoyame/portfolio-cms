@@ -2,6 +2,9 @@ import type { GlobalConfig } from 'payload'
 
 export const Sitewide: GlobalConfig = {
 	slug: 'sitewide',
+	access: {
+		read: () => true
+	},
 	fields: [
 		{
 			type: 'tabs',

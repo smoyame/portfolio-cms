@@ -5,6 +5,9 @@ import { VideoBlock } from '@/collections/blocks/VideoBlock'
 
 export const Feature: CollectionConfig = {
 	slug: 'feature',
+	access: {
+		read: () => true
+	},
 	admin: {
 		useAsTitle: 'name',
 	},
