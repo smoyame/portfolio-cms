@@ -479,7 +479,8 @@ export interface Feature {
         relationTo: 'project';
         value: string | Project;
       } | null);
-  name?: string | null;
+  name: string;
+  slug: string;
   desc?: string | null;
   content?: (ImageBlock | RichtextBlock | VideoBlock)[] | null;
   meta?: {
@@ -773,6 +774,7 @@ export interface MediaSelect<T extends boolean = true> {
 export interface FeatureSelect<T extends boolean = true> {
   subject?: T;
   name?: T;
+  slug?: T;
   desc?: T;
   content?:
     | T

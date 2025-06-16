@@ -22,6 +22,25 @@ export const Feature: CollectionConfig = {
 			type: 'text',
 			name: 'name',
 			label: 'Project Name',
+			required: true
+		},
+		{
+			type: 'text',
+			name: 'slug',
+			required: true,
+			hooks: {
+				beforeValidate: [
+					({ value, operation, siblingData }) => {
+						if (operation === "update") {
+							const name = siblingData.name
+							return value = name.replace(/\W/g, '-').replace(/-{2,}/g, '-').toLowerCase()
+						}
+					}
+				]
+			},
+			admin: {
+				readOnly: true
+			}
 		},
 		{
 			type: 'text',
