@@ -46,8 +46,10 @@ export const Media: CollectionConfig = {
       ({ req, operation, context }) => {
         if ((operation === 'create') && req.file) {
           context.origFilename = req.file.name
-          const extension = req.file.name.match(/.\w*$/)
-          req.file.name = globalThis.crypto.randomUUID() + extension
+          if (!req.file.name.match(/favicon/g)) {
+            const extension = req.file.name.match(/.\w*$/)
+            req.file.name = globalThis.crypto.randomUUID() + extension
+          }
         }
       }
     ],
