@@ -46,6 +46,26 @@ export const Feature: CollectionConfig = {
 			type: 'text',
 			name: 'desc',
 			label: 'Description',
+			admin: {
+				description: `A short snippet describing the deliverables.`
+			}
+		},
+		{
+			type: 'textarea',
+			name: 'prompt',
+			label: 'Prompt',
+			admin: {
+				description: `A mid-length leading question or description of the project's goals or motives.`
+			}
+		},
+		{
+			type: 'textarea',
+			name: 'synopsis',
+			label: 'Synopsis',
+			admin: {
+				description: `A longer description that provides a couple paragraphs of details about the project.`,
+				rows: 6
+			}
 		},
 		{
 			type: 'blocks',

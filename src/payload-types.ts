@@ -481,7 +481,18 @@ export interface Feature {
       } | null);
   name: string;
   slug: string;
+  /**
+   * A short snippet describing the deliverables.
+   */
   desc?: string | null;
+  /**
+   * A mid-length leading question or description of the project's goals or motives.
+   */
+  prompt?: string | null;
+  /**
+   * A longer description that provides a couple paragraphs of details about the project.
+   */
+  synopsis?: string | null;
   content?: (ImageBlock | RichtextBlock | VideoBlock)[] | null;
   meta?: {
     title?: string | null;
@@ -776,6 +787,8 @@ export interface FeatureSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
   desc?: T;
+  prompt?: T;
+  synopsis?: T;
   content?:
     | T
     | {
