@@ -74,6 +74,7 @@ export interface Config {
     users: User;
     media: Media;
     feature: Feature;
+    tag: Tag;
     client: Client;
     discipline: Discipline;
     employer: Employer;
@@ -92,6 +93,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     feature: FeatureSelect<false> | FeatureSelect<true>;
+    tag: TagSelect<false> | TagSelect<true>;
     client: ClientSelect<false> | ClientSelect<true>;
     discipline: DisciplineSelect<false> | DisciplineSelect<true>;
     employer: EmployerSelect<false> | EmployerSelect<true>;
@@ -160,6 +162,10 @@ export interface Media {
   alt: string;
   relatedTo?:
     | (
+        | {
+            relationTo: 'tag';
+            value: string | Tag;
+          }
         | {
             relationTo: 'client';
             value: string | Client;
@@ -316,6 +322,16 @@ export interface Media {
       filename?: string | null;
     };
   };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tag".
+ */
+export interface Tag {
+  id: string;
+  name?: string | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -523,6 +539,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'feature';
         value: string | Feature;
+      } | null)
+    | ({
+        relationTo: 'tag';
+        value: string | Tag;
       } | null)
     | ({
         relationTo: 'client';
@@ -838,6 +858,15 @@ export interface VideoBlockSelect<T extends boolean = true> {
   end?: T;
   id?: T;
   blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tag_select".
+ */
+export interface TagSelect<T extends boolean = true> {
+  name?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

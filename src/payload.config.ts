@@ -14,6 +14,8 @@ import { Feature } from './collections/Feature'
 import { About } from './globals/About'
 import { Sitewide } from './globals/Sitewide'
 
+import { Tag } from './collections/micro/Tag'
+
 import { Client } from '@/collections/micro/Client'
 import { Discipline } from '@/collections/micro/Discipline'
 import { Employer } from '@/collections/micro/Employer'
@@ -35,7 +37,7 @@ export default buildConfig({
     },
   },
   blocks: [ImageBlock, RichtextBlock, VideoBlock],
-  collections: [Users, Media, Feature, Client, Discipline, Employer, Job, Project],
+  collections: [Users, Media, Feature, Tag, Client, Discipline, Employer, Job, Project],
   editor: lexicalEditor(),
   globals: [About, Sitewide],
   secret: process.env.PAYLOAD_SECRET as string,

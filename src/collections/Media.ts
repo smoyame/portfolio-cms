@@ -102,7 +102,7 @@ export const Media: CollectionConfig = {
     {
       type: 'relationship',
       name: 'relatedTo',
-      relationTo: ['client', 'discipline', 'employer', 'job', 'project'],
+      relationTo: ['tag', 'client', 'discipline', 'employer', 'job', 'project'],
       hasMany: true
     }
   ],
