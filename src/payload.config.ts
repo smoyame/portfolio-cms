@@ -80,8 +80,28 @@ export default buildConfig({
       globals: ['about', 'sitewide'],
       tabbedUI: true,
       uploadsCollection: 'media',
-      generateTitle: ({ doc }) => `Website.com — ${doc.title}`,
-      generateDescription: ({ doc }) => doc.plaintext
+      generateTitle: ({ doc, collectionSlug, globalSlug }) => {
+        let title;
+        if (globalSlug == 'about') {
+          title = globalSlug.charAt(0).toUpperCase() + globalSlug.slice(1)
+        } else if (collectionSlug == 'feature') {
+          title = doc.name
+        } else {
+          title = `Website.com`
+        }
+        return title
+      },
+      generateDescription: ({ doc, collectionSlug, globalSlug }) => {
+        let desc;
+        if (globalSlug == 'about') {
+          desc = `Your About Me page description here.`
+        } else if (collectionSlug == 'feature') {
+          desc = doc.prompt ? doc.prompt : `Your project page description fallback here.`
+        } else {
+          desc = `Your general website description fallback here.`
+        }
+        return desc
+      }
     })
   ],
 })
