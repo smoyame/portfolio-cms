@@ -31,7 +31,7 @@ export const Feature: CollectionConfig = {
 			hooks: {
 				beforeValidate: [
 					({ value, operation, siblingData }) => {
-						if (operation === "update") {
+						if (operation === "update" || operation === "create") {
 							const name = siblingData.name
 							return value = name.replace(/\W/g, '-').replace(/-{2,}/g, '-').toLowerCase()
 						}
