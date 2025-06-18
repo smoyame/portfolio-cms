@@ -94,7 +94,7 @@ export default buildConfig({
       generateDescription: ({ doc, collectionSlug, globalSlug }) => {
         let desc;
         if (globalSlug == 'about') {
-          desc = `Your About Me page description here.`
+          desc = `Your About Me page description should go here.`
         } else if (collectionSlug == 'feature') {
           desc = doc.prompt ? doc.prompt : `Your project page description fallback here.`
         } else {
