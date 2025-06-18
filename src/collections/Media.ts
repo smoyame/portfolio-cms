@@ -30,7 +30,7 @@ const imageSizesList = desiredSizeOpts.flatMap(size => desiredFormatOpts.map(for
   {
     name: `${size}w-${formatOptions.format}`,
     width: size,
-    withoutEnlargement: true,
+    withoutEnlargement: false,
     formatOptions: formatOptions,
     generateImageName: ({ originalName, extension, width }: any) => `${originalName}-${width}.${extension}`
   }
