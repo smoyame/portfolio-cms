@@ -442,7 +442,11 @@ export interface RichtextBlock {
  */
 export interface VideoBlock {
   media?: (string | null) | Media;
+  externalURL?: string | null;
   controls?: boolean | null;
+  mute?: boolean | null;
+  autoplay?: boolean | null;
+  loop?: boolean | null;
   start?: number | null;
   end?: number | null;
   id?: string | null;
@@ -853,7 +857,11 @@ export interface RichtextBlockSelect<T extends boolean = true> {
  */
 export interface VideoBlockSelect<T extends boolean = true> {
   media?: T;
+  externalURL?: T;
   controls?: T;
+  mute?: T;
+  autoplay?: T;
+  loop?: T;
   start?: T;
   end?: T;
   id?: T;

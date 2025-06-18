@@ -35,7 +35,7 @@ export const VideoBlock: Block = {
 		{
 			type: 'checkbox',
 			name: 'autoplay',
-			label: 'Mute video',
+			label: 'Autoplay video',
 			defaultValue: true
 		},
 		{
