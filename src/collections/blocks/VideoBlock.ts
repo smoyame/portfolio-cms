@@ -15,11 +15,33 @@ export const VideoBlock: Block = {
 					mimeType: { contains: 'video' },
 				};
 			}
+		}, {
+			type: 'text',
+			name: 'externalURL',
+			label: 'External Vimeo URL'
 		},
 		{
 			type: 'checkbox',
 			name: 'controls',
 			label: 'Enable Video Controls',
+			defaultValue: true
+		},
+		{
+			type: 'checkbox',
+			name: 'mute',
+			label: 'Mute video',
+			defaultValue: true
+		},
+		{
+			type: 'checkbox',
+			name: 'autoplay',
+			label: 'Mute video',
+			defaultValue: true
+		},
+		{
+			type: 'checkbox',
+			name: 'loop',
+			label: 'Loop video',
 			defaultValue: true
 		},
 		{
