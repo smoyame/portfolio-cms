@@ -102,6 +102,12 @@ export default buildConfig({
         }
         return desc
       }
-    })
+    }),
+
   ],
+  upload: {
+    limits: {
+      fileSize: 5000000, // 5MB, written in bytes
+    },
+  },
 })
